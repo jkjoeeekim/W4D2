@@ -1,4 +1,5 @@
 require 'byebug'
+require 'colorize'
 require_relative 'king'
 require_relative 'piece'
 require_relative 'queen'
@@ -14,6 +15,7 @@ class Board
   def initialize
     @grid = Array.new(8) { Array.new(8) }
     setup_board
+    Display.new(self)
   end
 
   def [](pos)
@@ -35,16 +37,16 @@ class Board
     ending = self[end_pos]
     raise StandardError, 'Invalid starting position' if start.is_a?(NullPiece) || start.nil?
     raise StandardError, 'Invalid ending position' if ending.nil?
+
     self[start_pos] = ending
     self[end_pos] = start
-    
+
     if !start.is_a?(NullPiece)
       start.current_pos = end_pos
     elsif !ending.is_a?(NullPiece)
       ending.current_pos = start_pos
-    elsif start.is_a?(Pawn)
-      start.moved = true
     end
+    start.moved = true if start.is_a?(Pawn)
   end
 
   def setup_board
@@ -89,6 +91,12 @@ class Board
       puts row.to_s
     end
   end
+
+  def valid_pos?(pos)
+    row, col = pos
+    (0..7).to_a.include?(row) && (0..7).to_a.include?(col)
+  end
+
   # there is no piece at start_pos or
   # the piece cannot move to end_pos.
 end
@@ -97,11 +105,13 @@ if $PROGRAM_NAME == __FILE__
   b = Board.new
   b.print
 
-  #b.move_piece([0, 4], [2, 2])
-  piece = b.grid[1][0]
+  b.move_piece([6, 1], [2, 1])
+  piece = b.grid[2][1]
+  p piece.moved
   p piece
-  #b.print
+  b.print
   p piece.move_dirs
+  p b.grid[1][1].move_dirs
   
 
   # b.print

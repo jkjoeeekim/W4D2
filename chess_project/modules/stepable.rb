@@ -1,4 +1,3 @@
-
 module Stepable
   def moves(pos, directions)
     possible_pos = []
@@ -7,11 +6,9 @@ module Stepable
       row += direction[0]
       col += direction[1]
 
-      if (0..7).to_a.include?(row) && (0..7).to_a.include?(col) 
-          if self.board.grid[row][col].color != self.color
-            possible_pos << [row, col]
-          end
-      end
+      next unless (0..7).to_a.include?(row) && (0..7).to_a.include?(col)
+
+      possible_pos << [row, col] if board.grid[row][col].color != color
     end
     possible_pos
   end
