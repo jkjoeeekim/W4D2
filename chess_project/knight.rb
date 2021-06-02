@@ -1,7 +1,8 @@
 require_relative 'piece'
-
+require_relative 'modules/stepable.rb'
 class Knight < Piece
-  def initialize
-    super(:N)
+  include Stepable
+  def initialize(color)
+    super(:N,color)
   end
 end

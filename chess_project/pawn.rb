@@ -1,7 +1,7 @@
 require_relative 'piece'
 
 class Pawn < Piece
-  def initialize
-    super(:P)
+  def initialize(color)
+    super(:P,color)
   end
 end

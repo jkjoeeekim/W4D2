@@ -1,7 +1,8 @@
 require_relative 'piece'
-
+require_relative 'modules/slideable.rb'
 class Rook < Piece
-  def initialize
-    super(:R)
+  include Slideable
+  def initialize(color)
+    super(:R,color)
   end
 end

@@ -4,7 +4,7 @@ require_relative 'piece'
 class NullPiece < Piece
   include Singleton
 
-  def initialize
-    super(:E)
+  def initialize()
+    super(:E,"none")
   end
 end

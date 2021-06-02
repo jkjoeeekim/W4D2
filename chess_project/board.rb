@@ -44,22 +44,34 @@ class Board
     grid.each_with_index do |row, idx|
       if (2..5).to_a.include?(idx)
         row.map! { |_piece| NullPiece.instance }
-      elsif [1, 6].include?(idx)
-        row.map! { |_piece| Pawn.new }
+      elsif idx == 1
+        row.map! { |_piece| Pawn.new('black') }
+      elsif idx == 6 
+        row.map! { |_piece| Pawn.new('white') }
       else
         row.each_with_index do |_piece, idx2|
           pos = [idx, idx2]
-          case idx2
-          when 0, 7
-            self[pos] = Rook.new
-          when 1, 6
-            self[pos] = Knight.new
-          when 2, 5
-            self[pos] = Bishop.new
-          when 3
-            self[pos] = Queen.new
-          when 4
-            self[pos] = King.new
+          case pos
+          when [0, 0] , [0, 7]
+            self[pos] = Rook.new('black')
+          when [7, 0] , [7, 7]
+            self[pos] = Rook.new('white')
+          when [0, 1] , [0, 6]
+            self[pos] = Knight.new('black')
+          when [7, 1] , [7, 6]
+            self[pos] = Knight.new('white')
+          when [0, 2] , [0, 5]
+            self[pos] = Bishop.new('black')
+          when [7, 2] , [7, 5]
+            self[pos] = Bishop.new('white')
+          when [0, 3] 
+            self[pos] = Queen.new('black')
+          when [7, 3]
+            self[pos] = Queen.new('white')
+          when [0, 4]
+            self[pos] = King.new('black')
+          when [7, 4]
+            self[pos] = King.new('white')
           end
         end
       end
@@ -70,17 +82,23 @@ class Board
     @grid.inspect
   end
 
+  def print
+    @grid.each do |row|
+      puts "#{row}"
+    end
+  end
   # there is no piece at start_pos or
   # the piece cannot move to end_pos.
 end
 
 if $PROGRAM_NAME == __FILE__
   b = Board.new
-  p b
+  b.print
   b.move_piece([0, 0], [0, 1])
-  p b
+
+  b.print
   b.move_piece([0, 2], [1, 0])
-  p b
+  b.print
   # p b.move_piece([-1, 0], [3, 3])
   # p b.move_piece([0, 3], [-1, 0])
   # p b.move_piece([4, 0], [0, 0])
