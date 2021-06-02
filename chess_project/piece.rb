@@ -1,10 +1,11 @@
 class Piece
   attr_accessor :board, :color, :current_pos
 
-  def initialize(value, color, pos)
+  def initialize(value, color, pos, board)
     @value = value
     @color = color
     @current_pos = pos
+    @board = board
   end
 
   def inspect
