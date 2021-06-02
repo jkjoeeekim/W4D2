@@ -1,5 +1,4 @@
 require 'byebug'
-# debugger
 require_relative 'king'
 require_relative 'piece'
 require_relative 'queen'
@@ -19,24 +18,24 @@ class Board
 
   def [](pos)
     x, y = pos
+    return nil unless (0..7).to_a.include?(x) && (0..7).to_a.include?(y)
+
     grid[x][y]
   end
 
   def []=(pos, val)
     x, y = pos
+    return nil unless (0..7).to_a.include?(x) && (0..7).to_a.include?(y)
+
     grid[x][y] = val
   end
 
   def move_piece(start_pos, end_pos)
     start = self[start_pos]
     ending = self[end_pos]
-    if start == NullPiece
-      raise StandardError, "Can't move this piece"
-    elsif !ending
-      raise StandardError, 'Invalid ending position'
-    end
+    raise StandardError, 'Invalid starting position' if start.is_a?(NullPiece) || start.nil?
+    raise StandardError, 'Invalid ending position' if ending.nil?
 
-    # Only works if moving to NullPiece as of now
     self[start_pos] = ending
     self[end_pos] = start
   end
@@ -82,4 +81,7 @@ if $PROGRAM_NAME == __FILE__
   p b
   b.move_piece([0, 2], [1, 0])
   p b
+  # p b.move_piece([-1, 0], [3, 3])
+  # p b.move_piece([0, 3], [-1, 0])
+  # p b.move_piece([4, 0], [0, 0])
 end
