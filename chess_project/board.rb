@@ -33,20 +33,24 @@ class Board
   end
   
   def move_piece(start_pos, end_pos)
-    start = self[start_pos]
-    ending = self[end_pos]
+    start = self[start_pos] #BL K
+    ending = self[end_pos] #WH P
     raise StandardError, 'Invalid starting position' if start.is_a?(NullPiece) || start.nil?
     raise StandardError, 'Invalid ending position' if ending.nil?
 
-    self[start_pos] = ending
-    self[end_pos] = start
+    self[start_pos] = ending  #WH P
+    self[end_pos] = start     #BL K
 
     if !start.is_a?(NullPiece)
       start.current_pos = end_pos
-    elsif !ending.is_a?(NullPiece)
+    end
+    if !ending.is_a?(NullPiece)
       ending.current_pos = start_pos
+      self[start_pos] = NullPiece.instance
     end
     start.moved = true if start.is_a?(Pawn)
+
+
   end
 
   def setup_board
@@ -96,7 +100,20 @@ class Board
     row, col = pos
     (0..7).to_a.include?(row) && (0..7).to_a.include?(col)
   end
-
+ 
+  def in_check?(color) #White's turn end -> in_check?("BL") (check current turn if in check)
+    color == "WH" ? opp_color = "BL" : opp_color = "WH"
+    our_king = []
+    opp_color_moves = []    
+    @grid.each_with_index do |row, idx|
+      row.each_with_index do |ele, idx2|
+        our_king += [idx, idx2] if ele.color == color && ele.value == :K
+        opp_color_moves += ele.move_dirs if ele.color == opp_color
+      end
+    end
+    opp_color_moves.include?(our_king)
+    checkmate?(color)
+  end
   # there is no piece at start_pos or
   # the piece cannot move to end_pos.
 end

@@ -27,4 +27,20 @@ class Display
 end
 
 d = Display.new(Board.new)
+
+b = d.board
+
+b.move_piece([7, 3], [2, 4])
+p b.in_check?("BL")
 d.render
+
+
+
+
+# b.print
+# b.move_piece([0, 2], [1, 0])
+# b.print
+# p b.move_piece([-1, 0], [3, 3])
+# p b.move_piece([0, 3], [-1, 0])
+# p b.move_piece([4, 0], [0, 0])
+
