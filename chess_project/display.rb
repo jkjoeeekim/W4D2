@@ -26,13 +26,13 @@ class Display
   end
 end
 
-d = Display.new(Board.new)
+# d = Display.new(Board.new)
 
-b = d.board
+# b = d.board
 
-b.move_piece([7, 3], [2, 4])
-p b.in_check?("BL")
-d.render
+# b.move_piece([7, 3], [2, 4])
+# p b.in_check?("BL")
+# d.render
 
 
 
