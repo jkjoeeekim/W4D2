@@ -13,12 +13,13 @@ class Display
   def render
     while true
       puts "\n\n\n\n "
+      puts "#{' ' * 4}#{('a'..'h').to_a.join('  ')}\n "
       board.grid.each_with_index do |row, idx1|
         new_row = []
         row.each_with_index do |ele, idx2|
-          new_row << (([idx1, idx2] == cursor.cursor_pos) ? ele.value.to_s.colorize(:red) : ele.value.to_s.colorize(:blue))
+          new_row << (([idx1, idx2] == cursor.cursor_pos) ? ele.value.to_s.colorize(:color => :green, :background => :red) : ele.value)
         end
-        puts "#{new_row.join}"
+        puts "#{idx1 + 1}#{' ' * 3}#{new_row.join('  ')}"
       end
       puts "\n\n\n\n "
       cursor.get_input
@@ -26,6 +27,10 @@ class Display
   end
 end
 
+board = Board.new
+board.setup_board
+display = Display.new(board)
+display.render
 # d = Display.new(Board.new)
 
 # b = d.board

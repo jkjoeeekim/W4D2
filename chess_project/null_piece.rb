@@ -5,6 +5,6 @@ class NullPiece < Piece
   include Singleton
 
   def initialize
-    super(:E, :NA, :NA, :NA)
+    super(' ', :NA, :NA, :NA)
   end
 end
